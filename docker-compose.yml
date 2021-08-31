@@ -1,0 +1,19 @@
+version: "3"
+
+services:
+  core-ms:
+    container_name: core-ms
+    image: core-ms
+    working_dir: /usr/src/app
+    volumes:
+      - ./:/usr/src/app/
+    ports:
+      - 3000:3000
+    depends_on:
+      - mongo
+    command: bash -c "npm run start"
+
+  mongo:
+    container_name: mongo
+    image: mongo:latest
+    restart: always
