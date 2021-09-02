@@ -11,9 +11,11 @@ services:
       - 3000:3000
     depends_on:
       - mongo
-    command: bash -c "npm run start"
-
+      
   mongo:
-    container_name: mongo
-    image: mongo:latest
-    restart: always
+    container_name: mongodb
+    image: mongo
+    volumes:
+      - ./mongodata:/data/db
+    ports:
+      - 27017:27017
