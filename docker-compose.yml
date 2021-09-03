@@ -11,6 +11,13 @@ services:
       - 3000:3000
     depends_on:
       - mongo
+      - rabbitmq
+    environment:
+      AMQP_URL: amqp://guest:guest@rabbitmq:5672
+      MONGO_URL: mongodb://mongo:27017/nest
+    networks:
+      - mongo_nodejs
+      - rabbitmq_nodejs
       
   mongo:
     container_name: mongodb
@@ -19,3 +26,23 @@ services:
       - ./mongodata:/data/db
     ports:
       - 27017:27017
+    networks:
+      - mongo_nodejs
+
+  rabbitmq:
+    image: rabbitmq:3.8-management-alpine
+    container_name: 'rabbitmq'
+    ports:
+        - 5673:5672
+        - 15673:15672
+    volumes:
+        - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+        - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    networks:
+        - rabbitmq_nodejs
+        
+networks:
+  rabbitmq_nodejs:
+    driver: bridge
+  mongo_nodejs:
+    driver: bridge

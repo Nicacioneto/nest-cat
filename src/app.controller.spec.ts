@@ -15,8 +15,8 @@ describe('AppController', () => {
   });
 
   describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Hello World!');
+    it('should return "Hi! Welcome to core-ms!"', () => {
+      expect(appController.health()).toBe('Hi! Welcome to core-ms!');
     });
   });
 });
